@@ -17,4 +17,17 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntime 'org.junit.vintage:junit-vintage-engine'
+    testCompile 'org.junit.jupiter:junit-jupiter-api'
+
+}
+
+
+task integration(type: Test) {
+    include '**/integration/**'
+}
+
+test {
+    include '**/unit/**'
 }
