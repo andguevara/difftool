@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Base64;
 import java.util.Optional;
 
 @Controller
@@ -32,6 +31,12 @@ public class DiffController {
     @Autowired
     private DiffService diffService;
 
+    /***
+     * Restful endpoint to submit the left base 64 encoded string
+     * @param id The id that should match the id used in the right post and in the get for the results
+     * @param base64encodedString The json containing the base 64 encoded string
+     * @return The status of the current Entity, detailing if both left and right have been submitted for this id
+     */
     @PostMapping(path = "{id}/left", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<DiffEntity>
     setLeftDiff(@PathVariable(value = "id") Long id, @RequestBody StringEncoded base64encodedString) {
@@ -55,6 +60,12 @@ public class DiffController {
         }
     }
 
+    /***
+     * Restful endpoint to submit the right base 64 encoded string
+     * @param id The id that should match the id used in the left post and in the get for the results
+     * @param base64encodedString The json containing the base 64 encoded string
+     * @return The status of the current Entity, detailing if both left and right have been submitted for this id
+     */
     @PostMapping(path = "{id}/right", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<DiffEntity>
     setRightDiff(@PathVariable(value = "id") Long id, @RequestBody StringEncoded base64encodedString) {
@@ -79,6 +90,11 @@ public class DiffController {
         }
     }
 
+    /***
+     * Get endpoint to get the result of the diff of the left and right strings
+     * @param id The id that was used to submit the left and the right string
+     * @return a Json object containing a description and a result of the comparison
+     */
     @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<Result> getResults(@PathVariable(value = "id") Long id) {
         Optional<DiffEntity> optionalDiffEntity = diffRepository.findBydiffid(id);

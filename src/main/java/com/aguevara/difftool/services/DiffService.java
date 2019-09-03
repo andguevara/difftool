@@ -8,6 +8,13 @@ import java.util.Base64;
 @Service
 public class DiffService {
 
+    /***
+     * Method to calculate whether the strings are equal, of different size and if of same size then return
+     * a description of when the first difference occurs (offset) and a result
+     * @param diffLeft the base 64 encoded left string
+     * @param diffRight the base 64 encoded right string
+     * @return Result object with the description of the result and the result status
+     */
     public Result calculateDiff(String diffLeft, String diffRight) {
         diffLeft = new String(Base64.getDecoder().decode(diffLeft));
         diffRight = new String(Base64.getDecoder().decode(diffRight));
